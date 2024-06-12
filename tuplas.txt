@@ -1,0 +1,88 @@
+INSERT INTO Usuarios (dni, nombre, telefono, correo, fechaIngresoUSC, rol, fechaVeto, numeroInfracciones, contrasena)
+VALUES
+('333444555', 'José García', '981654987', 'jose.garcia@usc.es', '2016-09-01', 'Alumno', NULL, 4, NULL),
+('777888999', 'Luisa Pérez', '981123456', 'luisa.perez@usc.es', '2018-06-12', 'Administracion', NULL, 1, '23c8f1bdd488e9bc079b81e4f2f6f6e5651359fdb8ed43c4287d1eb1ef24697d'),
+('111222333', 'Elena Fernández', '981789456', 'elena.fernandez@usc.es', '2013-11-20', 'Docente', '2022-03-28', 2, NULL),
+('444555666', 'Marta Gómez', '981456789', 'marta.gomez@usc.es', '2019-02-15', 'Alumno', NULL, 0, NULL),
+('888999000', 'Carlos Martínez', '981987654', 'carlos.martinez@usc.es', '2017-05-10', 'Administracion', NULL, 0, 'bef756a91a6b011a05e7eb18f65b26e7d074e31d5b19a8f636513f231cd59928'),
+('101112131', 'Ana Rodríguez', '981654987', 'ana.rodriguez@usc.es', '2020-09-01', 'Alumno', NULL, 3, NULL),
+('141516171', 'David López', '981123789', 'david.lopez@usc.es', '2015-06-12', 'Docente', NULL, 0, NULL),
+('181920212', 'Isabel Pérez', '981789123', 'isabel.perez@usc.es', '2012-11-20', 'Administracion', '2022-03-15', 1, 'da248eeaffa573da8c323c3eb56aaf32ec6ce244e401a24c55f30c907d0bbfb5'),
+('222333444', 'Carmen García', '981456123', 'carmen.garcia@usc.es', '2022-02-15', 'Alumno', NULL, 0, NULL),
+('555666777', 'Alberto Gómez', '981987123', 'alberto.gomez@usc.es', '2020-05-10', 'Docente', NULL, 2, NULL),
+('891011121', 'Sofía López', '981654987', 'sofia.lopez@usc.es', '2021-09-01', 'Alumno', NULL, 1, NULL),
+('131415161', 'Antonio Martínez', '981123789', 'antonio.martinez@usc.es', NULL, 'noUSC', NULL, 0, NULL),
+('171819202', 'María Pérez', '981789123', 'maria.perez@usc.es', NULL, 'noUSC', '2022-03-15', 4, NULL);
+
+
+INSERT INTO vehiculos (matricula, tipo, marca, modelo, anhoMatriculacion, dni)
+VALUES 
+  ('1234ABC', 'C', 'Ford', 'Focus', 2015, '333444555'),
+  ('5678DEF', 'C', 'Renault', 'Clio', 2010, '777888999'),
+  ('9012GHI', 'M', 'Honda', 'CBR600RR', 2019, '111222333'),
+  ('3456JKL', 'G', 'Mercedes-Benz', 'Sprinter', 2018, '444555666'),
+  ('7890MNO', 'C', 'Seat', 'Ibiza', 2012, '888999000'),
+  ('1234PQR', 'C', 'Volkswagen', 'Polo', 2017, '101112131'),
+  ('5678STU', 'G', 'Iveco', 'Daily', 2020, '141516171'),
+  ('9012VWX', 'M', 'Yamaha', 'MT-07', 2016, '181920212'),
+  ('3456YZA', 'C', 'Opel', 'Corsa', 2014, '222333444'),
+  ('7890BCD', 'M', 'Suzuki', 'GSX-R750', 2013, '555666777'),
+  ('9143MKD', 'M', 'Voge', '125R', 2022, '131415161');
+
+
+INSERT INTO Aparcamientos (id, direccion, aforo) VALUES
+('PARK1', 'Calle Mayor 1', 50),
+('PARK2', 'Calle Real 2', 100),
+('PARK3', 'Plaza España 3', 75),
+('PARK4', 'Avenida Libertad 4', 200),
+('PARK5', 'Calle Estación 5', 80),
+('PARK6', 'Calle San Juan 6', 60),
+('PARK7', 'Avenida Constitución 7', 150),
+('PARK8', 'Calle Alcalá 8', 90),
+('PARK9', 'Calle Gran Vía 9', 120),
+('PARKA', 'Calle Mayor 10', 70);
+
+INSERT INTO PlazasAparcar (codigo, tipo, idAparcamiento) VALUES
+(1, 'C', 'PARK1'),
+(2, 'M', 'PARK2'),
+(32, 'G', 'PARK3'),
+(4, 'C', 'PARK4'),
+(50, 'M', 'PARK5'),
+(6, 'G', 'PARK6'),
+(7, 'C', 'PARK7'),
+(81, 'M', 'PARK8'),
+(9, 'G', 'PARK9'),
+(10, 'C', 'PARKA'),
+(92, 'G', 'PARK9');
+
+INSERT INTO PlazasReserva (codigo, tipo, idAparcamiento) VALUES
+(12, 'C', 'PARK1'),
+(6, 'M', 'PARK1'),
+(20, 'G', 'PARK2'),
+(3, 'G', 'PARK3'),
+(22, 'M', 'PARK5'),
+(61, 'G', 'PARK6'),
+(71, 'C', 'PARK7'),
+(8, 'G', 'PARK8'),
+(94, 'M', 'PARK9');
+
+INSERT INTO reservar (matriculaVehiculo, codigoPlazaReserva, idAparcamiento, fechaInicio, fechaFin)
+VALUES ('1234ABC', 12, 'PARK1', '2023-04-12 10:00:00', '2023-05-12 9:00:00'),
+	 ('3456JKL',12,'PARK1','2023-04-12 09:00:00','2023-04-14 09:00:00'),
+	 ('5678STU',22,'PARK5','2023-04-12 09:00:00','2023-04-13 09:00:00'),
+	 ('1234ABC',61,'PARK6','2023-04-12 09:00:00','2023-04-14 09:00:00'),
+	 ('5678STU',71,'PARK7','2023-04-12 09:00:00','2023-04-28 09:00:00'),
+	 ('5678STU',8,'PARK8','2023-04-12 09:00:00','2023-04-28 09:00:00'),
+	 ('7890MNO',6,'PARK1','2023-04-12 09:00:00','2023-04-20 09:00:00'),
+	 ('7890BCD',20,'PARK2','2023-04-12 09:00:00','2023-04-13 09:00:00'),
+	 ('1234ABC',3,'PARK3','2023-04-13 09:00:00','2023-04-15 09:00:00');
+
+INSERT INTO aparcar (matriculaVehiculo, codigoPlaza, idAparcamiento, fechaEntrada, fechaSalida)
+VALUES ('9012VWX', 50, 'PARK5', '2023-03-24 12:00:00', '2023-03-24 18:00:00'),
+	 ('5678STU',4,'PARK4','2023-04-12 12:00:00.000','2023-04-29 03:47:23.007'),
+	 ('9143MKD', 81, 'PARK8', '2023-03-24 12:00:00', '2023-03-24 14:34:00'),
+	 ('3456JKL',6,'PARK6','2023-04-12 22:26:09.438',NULL),
+	 ('5678DEF',1,'PARK1','2023-04-12 22:28:44.948',NULL),
+	 ('1234ABC',2,'PARK2','2023-04-12 23:42:31.211',NULL),
+	 ('7890MNO',32,'PARK3','2023-04-13 00:00:21.804',NULL),
+	 ('1234PQR',50,'PARK5','2023-04-13 00:11:15.011',NULL);

@@ -1,0 +1,125 @@
+CREATE TABLE Usuarios (
+dni CHAR( 9 ) ,
+nombre VARCHAR( 500 ) NOT NULL,
+telefono CHAR( 9 ) ,
+correo VARCHAR ( 500 ) ,
+fechaIngresoUSC DATE,
+rol VARCHAR( 50 ) NOT NULL,
+fechaVeto DATE,
+numeroInfracciones INT NOT NULL DEFAULT 0 ,
+contrasena VARCHAR(64) default NULL,
+	CHECK ( numeroInfracciones IN ( 0 , 1 , 2 , 3 , 4 , 5 ) ) ,
+	CHECK ( rol IN ( 'Administracion' , 'Docente' , 'Alumno', 'noUSC' ) ) ,
+	PRIMARY KEY ( dni )
+);
+
+CREATE TABLE Vehiculos (
+matricula CHAR( 7 ) ,
+tipo CHAR( 1 ) NOT NULL,
+marca VARCHAR( 500 ) ,
+modelo VARCHAR( 500 ) ,
+anhoMatriculacion NUMERIC( 4 , 0 ) ,
+dni CHAR( 9 ) DEFAULT '000000000' ,
+	PRIMARY KEY ( matricula ) ,
+	FOREIGN KEY ( dni ) references usuarios(dni)
+		ON DELETE SET NULL 
+		ON UPDATE CASCADE, 
+	CHECK ( anhoMatriculacion > 1900 ) , /* Primer coche matriculado en Espana */
+	CHECK ( tipo IN ( 'C' , 'M' , 'G' ) ) /* Coche , moto o vehiculo grande */
+);	
+
+--Vehiculo ficticio para el setDefault
+INSERT INTO vehiculos (matricula, tipo, marca, modelo, anhoMatriculacion, dni)
+VALUES ('0000AAA', 'C', null, null, null, null);
+
+CREATE TABLE Aparcamientos (
+id CHAR(5),
+direccion VARCHAR( 1000 ) ,
+aforo numeric(3,0) NOT NULL,
+	PRIMARY KEY ( id )
+);
+
+--Aparcamiento ficticio para el setDefault
+INSERT INTO Aparcamientos (id, direccion, aforo)
+VALUES ('PARK0', null, 2);
+	
+CREATE TABLE PlazasAparcar (
+codigo NUMERIC( 3 , 0 ) ,
+tipo CHAR( 1 ) NOT NULL,
+idAparcamiento CHAR(5),
+	PRIMARY KEY ( codigo, idAparcamiento ) ,
+	FOREIGN KEY ( idAparcamiento ) references aparcamientos(id)
+		ON DELETE NO ACTION
+		ON UPDATE CASCADE,
+	CHECK ( tipo IN ( 'C ' , 'M' , 'G' ) ) /* Coche , moto o vehiculo grande */
+);
+
+--Plaza ficticia para el SetDefault
+INSERT INTO PlazasAparcar (codigo, tipo, idAparcamiento)
+VALUES (0,'C','PARK0');
+
+CREATE TABLE PlazasReserva (
+codigo NUMERIC( 3 , 0 ) ,
+tipo CHAR( 1 ) NOT NULL,
+idAparcamiento CHAR(5),
+	PRIMARY KEY ( codigo, idAparcamiento ) ,
+	FOREIGN KEY ( idAparcamiento ) references aparcamientos(id)
+		ON DELETE NO ACTION
+		ON UPDATE CASCADE,
+	CHECK ( tipo IN ( 'C' , 'M' , 'G' ) ) /* Coche , moto o vehiculo grande */
+);
+
+--Plaza ficticia para el SetDefault
+INSERT INTO PlazasReserva (codigo, tipo, idAparcamiento)
+VALUES(0,'C','PARK0');
+
+CREATE TABLE aparcar (
+matriculaVehiculo CHAR( 7 ) ,
+codigoPlaza NUMERIC( 3 , 0 ) DEFAULT 0 ,
+idAparcamiento CHAR(5),
+fechaentrada TIMESTAMP,
+fechasalida TIMESTAMP,
+	PRIMARY KEY ( matriculaVehiculo , codigoPlaza , idAparcamiento, fechaentrada ) ,
+	FOREIGN KEY ( matriculaVehiculo) references vehiculos(matricula)
+		ON DELETE SET DEFAULT
+		ON UPDATE CASCADE,
+	FOREIGN KEY ( codigoPlaza, idAparcamiento ) references plazasAparcar(codigo, idAparcamiento)
+		ON DELETE SET DEFAULT 
+		ON UPDATE CASCADE
+);
+
+ALTER TABLE aparcar 
+ALTER COLUMN matriculaVehiculo SET DEFAULT '0000AAA';
+
+ALTER TABLE aparcar 
+ALTER COLUMN codigoPlaza SET DEFAULT 0;
+
+ALTER TABLE aparcar 
+ALTER COLUMN idAparcamiento SET DEFAULT 'PARK0';
+
+
+CREATE TABLE reservar (
+matriculaVehiculo CHAR( 7 ) ,
+codigoPlazaReserva NUMERIC( 3 , 0 ) DEFAULT 0 ,
+idAparcamiento CHAR(5),
+fechaInicio TIMESTAMP,
+fechaFin TIMESTAMP,
+	PRIMARY KEY ( matriculaVehiculo , codigoPlazaReserva , idAparcamiento, fechaInicio) ,
+	FOREIGN KEY ( matriculaVehiculo) references vehiculos(matricula)
+		ON DELETE SET DEFAULT
+		ON UPDATE CASCADE,
+	FOREIGN KEY ( codigoPlazaReserva, idAparcamiento ) references plazasReserva(codigo, idAparcamiento)
+		ON DELETE SET DEFAULT
+		ON UPDATE CASCADE,
+	CHECK( fechaInicio < fechaFin )
+);
+
+ALTER TABLE reservar 
+ALTER COLUMN matriculaVehiculo SET DEFAULT '0000AAA';
+
+ALTER TABLE reservar 
+ALTER COLUMN codigoPlazaReserva SET DEFAULT 0;
+
+ALTER TABLE reservar 
+ALTER COLUMN idAparcamiento SET DEFAULT 'PARK0';
+
