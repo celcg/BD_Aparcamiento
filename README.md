@@ -1,6 +1,6 @@
 # BD_Aparcamiento - Parking Management System
 
-A desktop application developed in **Java** using the **Swing** library for the graphical user interface (GUI) and a **MySQL** database for data persistence. This system is designed to manage vehicle entries, exits, and record-keeping for a parking facility.
+A desktop application developed in **Java** using the **Swing** library for the graphical user interface (GUI) and a **MySQL** database for data persistence. This system is designed to manage vehicle entries, exits, and record-keeping for a parking facility. Developed by a team of 5 members, for more info see Memoria.pdf
 
 ##  Features
 
