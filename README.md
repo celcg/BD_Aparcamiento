@@ -25,10 +25,36 @@ Before running the project, ensure you have the following installed:
 3.  **MySQL Connector/J** (the .jar driver)
 4.  An IDE like **NetBeans, IntelliJ IDEA, or Eclipse**
 
-## Execution
-1. Create the database using scriptBaseDeDatos.txt.
-2. Fill it using tuplas.txt
-3. Execute Java project.
+## Installation
+Follow these steps to get the environment ready and run the application.
+
+### 1. Database Configuration
+The database structure and initial data are provided in `.txt` files.
+
+1.  **Create the Database:**
+    * Open your MySQL terminal or Workbench.
+    * Run: `CREATE DATABASE db_aparcamiento;` (or the name specified in your code).
+2.  **Create Tables:**
+    * Open `scriptBaseDeDatos.txt`.
+    * Copy the SQL commands and execute them in your MySQL editor to build the tables.
+3.  **Insert Initial Data:**
+    * Open `tuplas.txt`.
+    * Execute the `INSERT` statements to populate the database.
+
+### 2. Java Environment Setup
+1.  **Open the Project:** Import the source folder into your IDE (NetBeans, IntelliJ, or Eclipse).
+2.  **Add MySQL Driver:**
+    * Ensure the `mysql-connector-java.jar` is added to your project's **Libraries/Classpath**.
+3.  **Update Credentials:**
+    * Locate the connection class (e.g., `Conexion.java`).
+    * Update the `user` and `password` variables to match your local MySQL configuration.
+
+### 3. Running the App
+1.  Find the `Main` class (the one containing the `public static void main` method).
+2.  Run the file from your IDE or use the terminal:
+    ```bash
+    java -cp ".;lib/mysql-connector-java.jar" Main
+    ```
    
 ##  Project Structure
 Inside Aparcamiento3E.zip:
